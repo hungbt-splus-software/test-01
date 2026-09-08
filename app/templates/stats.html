@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Stats{% endblock %}
+{% block content %}
+<h1>Stats</h1>
+<p class="lede">Tóm tắt board — endpoint `/api/stats` trả cùng payload.</p>
+<ul class="board">
+  <li><strong>Total tickets</strong> <span>{{ stats.total_tickets }}</span></li>
+  <li><strong>Overdue</strong> <span>{{ stats.overdue }}</span></li>
+  <li><strong>Hours logged</strong> <span>{{ stats.hours_logged }}</span></li>
+  <li><strong>Active members</strong> <span>{{ stats.active_members }}</span></li>
+  <li><strong>Open projects</strong> <span>{{ stats.open_projects }}</span></li>
+  {% for status, count in stats.by_status.items() %}
+  <li><span class="pill {{ status }}">{{ status }}</span> <span>{{ count }}</span></li>
+  {% endfor %}
+</ul>
+{% endblock %}

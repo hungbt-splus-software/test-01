@@ -5,6 +5,11 @@
   <div>
     <h1>Board</h1>
     <p class="lede">Ticket dummy để tool sinh spec / unit test có domain bám vào.</p>
+    <form class="inline-search" method="get" action="/">
+      <input name="q" value="{{ q }}" placeholder="Tìm title, mô tả, assignee" />
+      <button type="submit">Tìm</button>
+    </form>
+    {% if error %}<p class="error">{{ error }}</p>{% endif %}
     <ul class="board">
       {% for ticket in tickets %}
       <li>
@@ -13,6 +18,7 @@
           <strong>{{ ticket.title }}</strong>
           <span class="pill {{ ticket.status }}">{{ ticket.status }}</span>
           <span class="pill {{ ticket.priority }}">{{ ticket.priority }}</span>
+          {% if is_overdue(ticket) %}<span class="pill high">overdue</span>{% endif %}
         </a>
       </li>
       {% else %}
@@ -36,8 +42,21 @@
           {% endfor %}
         </select>
       </label>
+      <label>Project
+        <select name="project_id">
+          <option value="">— none —</option>
+          {% for project in projects %}
+          <option value="{{ project.id }}">{{ project.name }}</option>
+          {% endfor %}
+        </select>
+      </label>
       <label>Assignee
-        <input name="assignee" maxlength="80" />
+        <select name="assignee">
+          <option value="">— unassigned —</option>
+          {% for member in members %}
+          <option value="{{ member.username }}">{{ member.display_name }}</option>
+          {% endfor %}
+        </select>
       </label>
       <button type="submit">Tạo</button>
     </form>

@@ -29,6 +29,18 @@ body {
   border-bottom: 1px solid var(--line);
 }
 
+.nav {
+  margin-left: auto;
+  display: flex;
+  gap: 16px;
+}
+
+.nav a {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 14px;
+}
+
 .brand {
   color: var(--ink);
   font-weight: 700;
@@ -107,6 +119,17 @@ button {
 
 .error { color: var(--high); }
 .empty { color: var(--muted); }
+
+.inline-search, form.inline {
+  display: flex;
+  gap: 8px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  margin: 0 0 16px;
+}
+
+form.inline { margin: 0; display: inline-flex; }
 
 @media (max-width: 760px) {
   .split { grid-template-columns: 1fr; }

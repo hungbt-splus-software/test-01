@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Projects{% endblock %}
+{% block content %}
+<section class="split">
+  <div>
+    <h1>Projects</h1>
+    {% if error %}<p class="error">{{ error }}</p>{% endif %}
+    <ul class="board">
+      {% for project in projects %}
+      <li>
+        <span class="id">#{{ project.id }}</span>
+        <strong>{{ project.name }}</strong>
+        <span>{{ project.slug }}</span>
+        <span class="pill {% if project.archived %}closed{% else %}open{% endif %}">
+          {% if project.archived %}archived{% else %}open{% endif %}
+        </span>
+        {% if not project.archived %}
+        <form class="inline" method="post" action="/projects/{{ project.id }}/archive">
+          <button type="submit">Archive</button>
+        </form>
+        {% endif %}
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+  <aside>
+    <h2>Tạo project</h2>
+    <form method="post" action="/projects">
+      <label>Name
+        <input name="name" required />
+      </label>
+      <label>Slug (optional)
+        <input name="slug" placeholder="website" />
+      </label>
+      <button type="submit">Tạo</button>
+    </form>
+    <p class="note">Không archive nếu còn ticket chưa closed.</p>
+  </aside>
+</section>
+{% endblock %}

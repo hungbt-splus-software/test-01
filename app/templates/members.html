@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Members{% endblock %}
+{% block content %}
+<section class="split">
+  <div>
+    <h1>Members</h1>
+    {% if error %}<p class="error">{{ error }}</p>{% endif %}
+    <ul class="board">
+      {% for member in members %}
+      <li>
+        <span class="id">#{{ member.id }}</span>
+        <strong>{{ member.display_name }}</strong>
+        <span>{{ member.username }}</span>
+        <span class="pill {% if member.active %}open{% else %}closed{% endif %}">
+          {% if member.active %}active{% else %}inactive{% endif %}
+        </span>
+        {% if member.active %}
+        <form class="inline" method="post" action="/members/{{ member.id }}/deactivate">
+          <button type="submit">Deactivate</button>
+        </form>
+        {% endif %}
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+  <aside>
+    <h2>Tạo member</h2>
+    <form method="post" action="/members">
+      <label>Username
+        <input name="username" required placeholder="maya" />
+      </label>
+      <label>Display name
+        <input name="display_name" required />
+      </label>
+      <button type="submit">Tạo</button>
+    </form>
+    <p class="note">Username: a-z, 0-9, dấu gạch. Không deactivate nếu còn ticket open / in_progress.</p>
+  </aside>
+</section>
+{% endblock %}

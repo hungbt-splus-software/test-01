@@ -16,30 +16,44 @@ uvicorn app.main:app --reload
 - UI: http://127.0.0.1:8000
 - OpenAPI: http://127.0.0.1:8000/docs
 
-## Test
+## Domain dummy (rule để spec/UT bám)
 
-```bash
-pytest
-```
+Tickets
 
-## Domain dummy
+- Status: `open` → `in_progress` → `resolved` → `closed` (không nhảy bước)
+- Ticket `closed` không update / delete / comment / assign / label / worklog
+- Filter theo `status`, `priority`, `project_id`, `q`, `overdue`
+- Assignee phải là member `active`
+- Không gắn ticket vào project đã archive
 
-Ticket board với vài rule cố ý để spec/UT có chỗ bám:
+SLA (`app/sla.py`)
 
-- Status: `open` → `in_progress` → `resolved` → `closed` (không được nhảy bước)
-- Ticket `closed` không được update / delete / comment
-- Filter list theo `status` và `priority`
+- high = 8h, medium = 24h, low = 72h (tính từ `created_at`)
+- Đổi priority thì tính lại `due_at`
+- `resolved` / `closed` không tính overdue
+
+Members
+
+- Username: `a-z0-9` và `-`, unique
+- Không deactivate nếu còn ticket `open` / `in_progress`
+
+Projects
+
+- Slug unique, tự slugify từ name nếu bỏ trống
+- Không archive nếu còn ticket chưa `closed`
+
+Labels / worklogs
+
+- Tối đa 3 label / ticket, không gắn trùng
+- Worklog: `0 < hours <= 12`, tổng <= 40h / ticket
 
 ## Cấu trúc
 
 ```
 app/
-  main.py                 FastAPI app
-  models.py               Ticket, Comment, enums
-  schemas.py              Pydantic request/response
-  store.py                In-memory store
-  services/ticket_service.py
-  routers/api.py          REST
-  routers/pages.py        HTML
-tests/
+  sla.py text.py constants.py
+  models.py schemas.py store.py
+  services/     ticket, member, project, label, worklog, stats
+  routers/      api, members, projects, labels, stats, pages
+tests/          mẫu cũ, domain mới chưa viết test
 ```
