@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{% block title %}Desk{% endblock %}</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+  <body>
+    <header class="top">
+      <a class="brand" href="/">Desk</a>
+      <span class="hint">dummy FastAPI fullstack</span>
+    </header>
+    <main>{% block content %}{% endblock %}</main>
+  </body>
+</html>

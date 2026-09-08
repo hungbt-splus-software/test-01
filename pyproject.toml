@@ -1,0 +1,10 @@
+[project]
+name = "desk"
+version = "0.1.0"
+description = "Dummy FastAPI fullstack app for spec and unit-test generation."
+requires-python = ">=3.11"
+readme = "README.md"
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
