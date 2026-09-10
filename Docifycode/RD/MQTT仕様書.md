@@ -1,3 +1,4 @@
+abc
 # DocifyCode MQTT連携 仕様書
 
 - 作成日: 2026-09-01
