@@ -1,3 +1,4 @@
+abc
 # DocifyCode データベース仕様書
 
 DocifyCodeFrontend / AICodeBot / DocifyCodeGenerativeService の3サービスが共有するMongoDBデータストアの構成、コレクション定義、およびフィールド仕様をまとめたリファレンス。
